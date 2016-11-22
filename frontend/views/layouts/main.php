@@ -34,24 +34,33 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+    $leftMenu = [
+        ['label' => '首页', 'url' => ['/site/index']],
+        ['label' => '文章', 'url' => ['/post/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $rightMenu[] = ['label' => '注册', 'url' => ['/site/signup']];
+        $rightMenu[] = ['label' => '登录', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-            'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
+        $rightMenu[] = [
+            'label' => '<img src="/statics/images/avatar/small.jpg" alt="' .Yii::$app->user->identity->username . '">' ,
+            'linkOptions' => ['class' => 'avatar'],
+            'items' => [
+                //i标签表示引入font-awesome的图标
+                ['label' => '<i class="fa fa-sign-out"></i> 退出','url' => ['/site/logout'],'linkOptions' => ['data-method' => 'post']],
+                //这里是加上下拉菜单的，然后linkOptions可以添加这个属性，这里表示通过post方式提交，url地址表示连接过去的url地址，最后展示出来的是a标签
+            ],
         ];
     }
     echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-left'],
+        'items' => $leftMenu,
+    ]);
+
+    echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
+        'encodeLabels' => false,//这个表示是html标间进行解析
+        'items' => $rightMenu,
     ]);
     NavBar::end();
     ?>
