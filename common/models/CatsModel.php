@@ -41,4 +41,21 @@ class CatsModel extends BaseModel
             'cat_name' => 'Cat Name',
         ];
     }
+
+
+    public static function getAllCats()
+    {
+        //需要静态方法
+        $cat = ['0' => '暂无分类'];
+        $res = self::find()->asArray()->all();
+
+        if($res){
+            //如果拿不到数据 返回是空或者false的 所以能直接使用
+            foreach ($res as $k => $list){
+                $cat[$list['id']] = $list['cat_name'];
+            }
+        }
+
+        return $cat;
+    }
 }
