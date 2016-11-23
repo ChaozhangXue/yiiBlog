@@ -22,6 +22,11 @@ class RelationPostTagsModel extends BaseModel
         return 'relation_post_tags';
     }
 
+    //这个命名也是有关联的 自带get，然后下面这个命名的话，with('tag')
+    public function getTag(){
+        return $this->hasOne(TagsModel::className(),['id' => 'tag_id']);//一对一的， 靠近表名的就和表名有关
+    }
+
     /**
      * @inheritdoc
      */

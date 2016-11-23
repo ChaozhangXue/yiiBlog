@@ -69,7 +69,9 @@ class PostForm extends Model
 
     public function getViewById($id)
     {
-        $res = PostsModel::find()->with('relate')->where(['id' => $id])->asArray()->one(); //relate中表示关联的数据
+        //with('relate')相当于表示PostsModel中有 getRelate这个方法来展示表的关系，可以一对一或者一对多
+        //with('relate.tag') 这个表示有两层关系， 和PostsModel相关联的那个model 还有一层二级的关联对象
+        $res = PostsModel::find()->with('relate.tag')->where(['id' => $id])->asArray()->one(); //relate中表示关联的数据
         /*
          Array
         (
@@ -106,8 +108,16 @@ class PostForm extends Model
             throw new NotFoundHttpException("文章不存在");
         }
 
-        print_r($res);
-        die;
+        //处理上面返回的标签格式
+
+        $res['tags']  = [];
+        if(isset($res['relate']) && !empty($res['relate'])){ //进行这两层判断来保证不为空 一个判断是否设置了这个字段，一个表示这个字段是否为空
+            foreach ($res['relate'] as $list){
+                $res['tags'][] = $list['tag']['tag_name'];
+            }
+        }
+        unset($res['relate']);
+        return $res;
     }
 
     public function create()

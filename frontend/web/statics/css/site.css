@@ -132,3 +132,26 @@ a.desc:after {
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     color:#fff;
 }
+
+.page-title {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.page-title h1 {
+    font-size: 18px;
+    margin: 4px 0 10px;
+}
+
+.page-title span {
+    color: #999;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.page-content {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    min-height: 400px;
+}
