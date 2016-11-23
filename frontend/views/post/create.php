@@ -24,7 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
 
 
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'content')->widget('common\widgets\ueditor\Ueditor',[
                 'options'=>[
                     'initialFrameWidth' => 850,

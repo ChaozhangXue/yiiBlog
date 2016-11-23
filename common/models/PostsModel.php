@@ -22,6 +22,8 @@ use common\models\base\BaseModel;
  */
 class PostsModel extends BaseModel
 {
+    const IS_VALID = 1;//已发布
+    const NO_VALID = 0;//未发布
     /**
      * @inheritdoc
      */
@@ -60,5 +62,13 @@ class PostsModel extends BaseModel
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /*
+     * 设计到表的关联，体现在yii2里面就是 with的用法
+     */
+    public function getRelate(){
+        return $this->hasMany(RelationPostTagsModel::className(), ['post_id' => 'id']);
+        //第一个参数是关联关系表的表名, 第二个参数表示RelationPostTagsModel.post_id = postModel.id
     }
 }
