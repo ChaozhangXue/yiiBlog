@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'statics/css/font-awesome-4.4.0/css/font-awesome.min.css', //会默认引入css的 只要写入地址就了
     ];
     public $js = [
+        'statics/js/site.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
