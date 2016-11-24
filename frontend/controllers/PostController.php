@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\CatsModel;
+use common\models\PostExtendsModel;
 use frontend\models\PostForm;
 use Yii;
 use frontend\controllers\base\BaseController;
@@ -94,6 +95,9 @@ class PostController extends BaseController
     public function actionView($id){
         $model = new PostForm();
         $data = $model->getViewById($id);
+
+        $entend_model = new PostExtendsModel();
+        $entend_model->upCounter(['post_id' => $id], 'browser', 1);
 
         return $this->render('view', ['data' => $data]);
     }

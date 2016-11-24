@@ -71,7 +71,8 @@ class PostForm extends Model
     {
         //with('relate')相当于表示PostsModel中有 getRelate这个方法来展示表的关系，可以一对一或者一对多
         //with('relate.tag') 这个表示有两层关系， 和PostsModel相关联的那个model 还有一层二级的关联对象
-        $res = PostsModel::find()->with('relate.tag')->where(['id' => $id])->asArray()->one(); //relate中表示关联的数据
+        //extend是另外一个关联关系
+        $res = PostsModel::find()->with('relate.tag', 'extend')->where(['id' => $id])->asArray()->one(); //relate中表示关联的数据
         /*
          Array
         (
@@ -208,5 +209,41 @@ class PostForm extends Model
         }
     }
 
+    public static function getList($cond, $curPage = 1, $pageSize = 5, $orderBy = ['id' => SORT_DESC])
+    {
+        $model = new PostsModel();
+
+        //查询语句
+        $select = ['id', 'title', 'summary', 'label_img', 'cat_id', 'user_id', 'user_name', 'is_valid', 'created_at', 'updated_at'];
+        $query = $model->find()->select($select)->where($cond)->with('relate.tag', 'extend')->orderBy($orderBy);
+
+        //获取数据
+        $res = $model->getPages($query, $curPage, $pageSize);
+
+        //格式化
+        $res['data'] = self::_formaList($res['data']);
+
+        return $res;
+    }
+
+    /*
+     * 数据格式化
+     */
+    public static function _formaList($data)
+    {
+        foreach ($data as &$list){
+            $list['tags'] = [];
+            if(isset($list['relate']) && !empty($list['relate'])){
+                foreach ($list['relate'] as $lt){
+                    if(isset($lt['tags']['tag_name'])){
+                        $list['tags'][] = $lt['tags']['tag_name'];
+                    }
+
+                }
+            }
+            unset($list['relate']);
+        }
+        return $data;
+    }
 
 }
