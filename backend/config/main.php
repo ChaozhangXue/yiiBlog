@@ -26,6 +26,12 @@ return [
                 ],
             ],
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true, //这个表示开启url美化
+            'showScriptName' => false, //这个字段表示不显示文件类型的名称，如.php或者.html
+            'rules' => [],
+//            'suffix' => '.html' //这个字段表示后缀
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

@@ -60,6 +60,7 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
+        $this->layout = 'login.php';//指定布局文件
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }

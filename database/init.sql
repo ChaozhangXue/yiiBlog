@@ -66,3 +66,11 @@ CREATE TABLE `post_extends` (
   `comment` int(11) DEFAULT '0' COMMENT '评论',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='文章扩展表';
+
+CREATE TABLE `feeds` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `content` varchar(255) NOT NULL COMMENT '内容',
+  `created_at` int(11) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='聊天信息表';
